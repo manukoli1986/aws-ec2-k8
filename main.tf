@@ -16,7 +16,7 @@ provider "aws" {
 variable "ingress_ports" {
   type = list(number)
   description = "List of Ingress Port"
-  default = [22,8080,80]
+  default = [22,8080,80,30000-32768]
 }
 
 resource "aws_security_group" "sg" {
@@ -74,4 +74,11 @@ resource "aws_instance" "k8worker" {
 
 output "EC2_Master_IP" {
   value = ["${aws_instance.k8master.public_ip}"]
+}
+
+output "EC2_WorkerNode_IP_1" {
+  value = ["${aws_instance.k8worker.0.public_ip}"]
+}
+output "EC2_WorkerNode_IP_2" {
+  value = ["${aws_instance.k8worker.1.public_ip}"]
 }
